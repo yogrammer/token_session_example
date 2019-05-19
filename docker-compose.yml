@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  web:
+    build: .
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: puma -v
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgresql
+    environment:
+      DATABASE_URL: postgres://postgres@postgresql
+      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
+  postgresql:
+    image: postgres:11.3-alpine
